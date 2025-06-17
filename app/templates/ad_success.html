@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anuncio Publicado!</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <h1>Parabens! Seu Anuncio Foi Publicado!</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <ul class="flashes">
+        {% for category, message in messages %}
+          <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    {% if ad %}
+        <div class="anuncio-detail">
+            <h2>{{ ad.nome }}</h2>
+            <p class="categoria">Categoria: {{ ad.categoria }}</p>
+            {% if ad.imagem %}
+                <img src="{{ url_for('main.uploaded_file', filename=ad.imagem) }}" alt="{{ ad.nome }}">
+            {% endif %}
+            <p>{{ ad.descricao }}</p>
+            <p class="preco">Preço: ${{ ad.preco | int | format_currency }}</p>
+        </div>
+    {% endif %}
+
+    <a href="{{ url_for('main.index') }}" class="btn-back">Ver todos os anúncios</a>
+    <a href="{{ url_for('main.criar_anuncio') }}" class="btn-create-ad">Criar Outro Anúncio</a>
+</body>
+</html>

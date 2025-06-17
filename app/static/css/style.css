@@ -1,0 +1,182 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #1a1a1a; /* Escuro, estilo GTA */
+    color: #eee;
+    line-height: 1.6;
+}
+
+h1 {
+    text-align: center;
+    color: #00ff00; /* Neon green */
+    margin-bottom: 30px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.btn-create-ad, .btn-submit-ad, .btn-back, .btn-comprar {
+    display: inline-block;
+    background-color: #00cc00; /* Mais verde */
+    color: white;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-create-ad:hover, .btn-submit-ad:hover, .btn-back:hover, .btn-comprar:hover {
+    background-color: #009900;
+    transform: translateY(-2px);
+}
+
+.anuncios-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.anuncio-card {
+    background-color: #333;
+    border: 2px solid #555;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.anuncio-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.6);
+}
+
+.anuncio-card h2 {
+    color: #ffd700; /* Dourado */
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 1.8em;
+}
+
+.anuncio-card .categoria {
+    font-style: italic;
+    color: #aaa;
+    margin-bottom: 15px;
+}
+
+.anuncio-card img {
+    max-width: 100%;
+    height: 200px; /* Altura fixa para consistência */
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #777;
+}
+
+.anuncio-card p {
+    margin-bottom: 10px;
+    color: #ddd;
+}
+
+.anuncio-card .preco {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #aaffaa; /* Verde claro */
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+/* Formulário de Criação */
+.ad-form {
+    background-color: #333;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 30px auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+
+.ad-form label {
+    display: block;
+    margin-bottom: 8px;
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.ad-form input[type="text"],
+.ad-form input[type="number"],
+.ad-form textarea,
+.ad-form select {
+    width: calc(100% - 20px);
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    background-color: #444;
+    color: #eee;
+    font-size: 1em;
+}
+
+.ad-form textarea {
+    resize: vertical;
+}
+
+.ad-form input[type="file"] {
+    padding: 10px 0;
+}
+
+.ad-form button[type="submit"] {
+    margin-top: 20px;
+    width: auto;
+    padding: 12px 30px;
+}
+
+.flashes {
+    list-style: none;
+    padding: 0;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 700px;
+    text-align: center;
+}
+
+.flashes li {
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.flashes .success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.flashes .error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.anuncio-detail {
+    background-color: #333;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 30px auto;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+}
+.anuncio-detail img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}

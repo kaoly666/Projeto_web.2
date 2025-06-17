@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewpoint" content="width=device-width, initial-scale=1.0">
+	<tittle>AutoTrader</tittle>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+	<h1>AutoTrader</h1>
+	<a href="{{ url_for('main.criar_anuncio') }}" class="btn-create-ad">Criar novo anuncio</a>
+
+	{% with message = get_flashed_messages(with_categories=true) %}
+		{% if messages %}
+			<ul class="flashes">
+			{% for category, message in messages %}
+				<li class="{{ category }}">{{ message }}</li>
+			{% endfor %}
+			</ul>
+		{% endif %}
+	{% endwith %}
+
+	<div class="anuncios-container">
+		{% for anuncio in anuncios %}
+		<div class="anuncio-card">
+			<h2>{{ anuncio.nome }}</h2>
+			<p class="categoria">categoria: {{ anuncio.categoria }}</p>
+			{% if anuncio.imagem %}
+				<img src="{{ url_for('main.uploaded_file', filename=anuncio.imagem) }}" alt="{{ anuncio.nome }}">
+			{% endif %}
+			<p class="preco">preco: ${{ anuncio.preco | int | format_currency }}</p>
+			<a href="#" class="btn-comprar">comprar (Simulado)</a>
+		</div>
+		{% else %}
+		<p>Nenhum anuncio disponivel ainda. Seja o primeiro a anunciar!</p>
+		{% endfor %}
+	</div>
+</body>
+</html>
