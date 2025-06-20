@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seu Carrinho de Compras</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>Seu Carrinho de Compras</h1>
+        <nav>
+            <a href="{{ url_for('main.index') }}">Voltar para a Loja</a>
+        </nav>
+    </header>
+
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class="flashes">
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+
+        <div class="cart-container">
+            {% if cart_items %}
+                <ul class="cart-list">
+                    {% for item in cart_items %}
+                    <li class="cart-item">
+                        <div class="item-details">
+                            <img src="{{ url_for('main.uploaded_file', filename=item.image) }}" alt="{{ item.name }}" class="cart-item-img">
+                            <h3>{{ item.name }}</h3>
+                            <p>Preco unitario: ${{ item.price | format_currency }}</p>
+                        </div>
+                        <div class="item-quantity-controls">
+                            <a href="{{ url_for('main.update_cart_item', ad_id=item.id, action='decrease') }}" class="quantity-btn">-</a>
+                            <span>{{ item.quantity }}</span>
+                            <a href="{{ url_for('main.update_cart_item', ad_id=item.id, action='increase') }}" class="quantity-btn">+</a>
+                            <p class="item-subtotal">Subtotal: ${{ (item.price * item.quantity) | format_currency }}</p>
+                        </div>
+                        <a href="{{ url_for('main.remove_from_cart', ad_id=item.id) }}" class="remove-item-btn">Remover</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="cart-summary">
+                    <p>Total da Compra: <span class="total-price">${{ total_price | format_currency }}</span></p>
+                    <button class="checkout-btn">Finalizar Compra (Simulado)</button>
+                </div>
+            {% else %}
+                <p>Seu carrinho esta vazio. <a href="{{ url_for('main.index') }}">Adicione alguns anuncios!</a></p>
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>

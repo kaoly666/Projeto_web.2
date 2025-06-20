@@ -1,39 +1,63 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewpoint" content="width=device-width, initial-scale=1.0">
-	<tittle>AutoTrader</tittle>
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoTrader</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-	<h1>AutoTrader</h1>
-	<a href="{{ url_for('main.criar_anuncio') }}" class="btn-create-ad">Criar novo anuncio</a>
+    <header>
+        <h1>AutoTrader</h1>
+        <nav>
+            <a href="{{ url_for('main.index') }}">Home</a>
+            <a href="{{ url_for('main.criar_anuncio') }}" class="btn-create-ad">Criar Anuncio</a>
+            <a href="{{ url_for('main.view_cart') }}" class="cart-link">
+                Carrinho (<span id="cart-item-count">{{ session.cart|length }}</span>)
+            </a>
+        </nav>
+    </header>
 
-	{% with message = get_flashed_messages(with_categories=true) %}
-		{% if messages %}
-			<ul class="flashes">
-			{% for category, message in messages %}
-				<li class="{{ category }}">{{ message }}</li>
-			{% endfor %}
-			</ul>
-		{% endif %}
-	{% endwith %}
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class="flashes">
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
 
-	<div class="anuncios-container">
-		{% for anuncio in anuncios %}
-		<div class="anuncio-card">
-			<h2>{{ anuncio.nome }}</h2>
-			<p class="categoria">categoria: {{ anuncio.categoria }}</p>
-			{% if anuncio.imagem %}
-				<img src="{{ url_for('main.uploaded_file', filename=anuncio.imagem) }}" alt="{{ anuncio.nome }}">
-			{% endif %}
-			<p class="preco">preco: ${{ anuncio.preco | int | format_currency }}</p>
-			<a href="#" class="btn-comprar">comprar (Simulado)</a>
-		</div>
-		{% else %}
-		<p>Nenhum anuncio disponivel ainda. Seja o primeiro a anunciar!</p>
-		{% endfor %}
-	</div>
+        <div class="anuncios-container">
+            {% for anuncio in anuncios %}
+            <div class="anuncio-card">
+                <h2>{{ anuncio.nome }}</h2>
+                <p class="categoria">Categoria: {{ anuncio.categoria }}</p>
+                {% if anuncio.imagem %}
+                    <img src="{{ url_for('main.uploaded_file', filename=anuncio.imagem) }}" alt="{{ anuncio.nome }}">
+                {% else %}
+                    <img src="{{ url_for('static', filename='images/placeholder.png') }}" alt="Sem Imagem">
+                {% endif %}
+                <p>{{ anuncio.descricao }}</p>
+                <p class="preco">Preco: ${{ anuncio.preco | format_currency }}</p>
+                <a href="{{ url_for('main.add_to_cart', ad_id=anuncio.id) }}" class="btn-add-to-cart">Adicionar ao Carrinho</a>
+            </div>
+            {% else %}
+            <p>Nenhum anuncio disponivel ainda. Seja o primeiro a anunciar!</p>
+            {% endfor %}
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/get_cart_count')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('cart-item-count').textContent = data.count;
+                })
+                .catch(error => console.error('Error fetching cart count:', error));
+        });
+    </script>
 </body>
 </html>

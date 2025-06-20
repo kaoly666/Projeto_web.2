@@ -3,34 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anuncio Publicado!</title>
+    <title>Anuncio Criado com Sucesso!</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <h1>Parabens! Seu Anuncio Foi Publicado!</h1>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        <ul class="flashes">
-        {% for category, message in messages %}
-          <li class="{{ category }}">{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
+    <header>
+        <h1>Anuncio Criado com Sucesso!</h1>
+        <nav>
+            <a href="{{ url_for('main.index') }}">Ver Todos os Anuncios</a>
+            <a href="{{ url_for('main.criar_anuncio') }}">Criar Outro Anuncio</a>
+        </nav>
+    </header>
 
-    {% if ad %}
-        <div class="anuncio-detail">
-            <h2>{{ ad.nome }}</h2>
-            <p class="categoria">Categoria: {{ ad.categoria }}</p>
-            {% if ad.imagem %}
-                <img src="{{ url_for('main.uploaded_file', filename=ad.imagem) }}" alt="{{ ad.nome }}">
-            {% endif %}
-            <p>{{ ad.descricao }}</p>
-            <p class="preco">Preço: ${{ ad.preco | int | format_currency }}</p>
+    <main>
+        <div class="success-message">
+            <p>Seu anuncio "{{ ad.nome }}" foi criado com sucesso!</p>
+            <p>Detalhes:</p>
+            <ul>
+                <li>Nome: {{ ad.nome }}</li>
+                <li>Descricao: {{ ad.descricao }}</li>
+                <li>Categoria: {{ ad.categoria }}</li>
+                <li>Preco: ${{ ad.preco | format_currency }}</li>
+                {% if ad.imagem %}
+                    <li>Imagem: <img src="{{ url_for('main.uploaded_file', filename=ad.imagem) }}" alt="{{ ad.nome }}" style="max-width: 200px; height: auto;"></li>
+                {% else %}
+                    <li>Imagem: Nenhuma imagem fornecida.</li>
+                {% endif %}
+            </ul>
         </div>
-    {% endif %}
-
-    <a href="{{ url_for('main.index') }}" class="btn-back">Ver todos os anúncios</a>
-    <a href="{{ url_for('main.criar_anuncio') }}" class="btn-create-ad">Criar Outro Anúncio</a>
+    </main>
 </body>
 </html>

@@ -4,7 +4,7 @@ import os
 import json
 import atexit # Para garantir que o ngrok seja encerrado ao sair
 
-print("Starting Los Santos AutoTrader...")
+print("AutoTrader...")
 
 # Importa a função create_app do seu pacote 'app'
 from app import create_app

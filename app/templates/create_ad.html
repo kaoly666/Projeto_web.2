@@ -1,50 +1,56 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Criar Novo Anuncio</title>
-	<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criar Novo Anuncio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-	<h1>Criar Novo Anúncio</h1>
+    <header>
+        <h1>Criar Novo Anuncio</h1>
+        <nav>
+            <a href="{{ url_for('main.index') }}">Voltar para a Loja</a>
+        </nav>
+    </header>
 
-	{% with messages = get_flashed_messages(with_categories=true) %}
-		{% if messages %}
-			<ul class="flashes">
-			{% for category, message in messages %}
-				<li class="{{ category }}">{{ message }}</li>
-			{% endfor %}
-			</ul>
-		{% endif %}
-	{% endwith %}
+    <main>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class="flashes">
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
 
-	<form method="POST" enctype="multipart/form-data" class="ad-form">
-		<label for="nome">Nome do Veículo:</label>
-		<input type="text" id="nome" name="nome" required>
+        <form method="POST" enctype="multipart/form-data" class="ad-form">
+            <label for="nome">Nome do Anuncio:</label>
+            <input type="text" id="nome" name="nome" required>
 
-		<label for="descricao">Descrição:</label>
-		<textarea id="descricao" name="descricao" rows="5" required></textarea>
+            <label for="descricao">Descricao:</label>
+            <textarea id="descricao" name="descricao" rows="5" required></textarea>
 
-		<label for="categoria">Categoria:</label>
-		<select id="categoria" name="categoria" required>
-			<option value="">Selecione uma categoria</option>
-			<option value="Sport">Esportivo</option>
-			<option value="Muscle">Muscle Car</option>
-			<option value="Off-Road">Off-Road</option>
-			<option value="Luxury">Luxo</option>
-			<option value="Sedan">Sedan</option>
-			<option value="Militar">Militar (Apenas para demonstração)</option>
-		</select>
+            <label for="categoria">Categoria:</label>
+            <select id="categoria" name="categoria" required>
+                <option value="">Selecione uma Categoria</option>
+                <option value="Muscle">Muscle</option>
+                <option value="Sport">Sport</option>
+                <option value="Militar">Militar</option>
+                <option value="Suv">SUV</option>
+                <option value="Sedan">Sedan</option>
+                <option value="Moto">Moto</option>
+            </select>
 
-		<label for="preco">Preco:</label>
-		<input type="number" id="preco" name="preco" step="0.01" min="0" required>
+            <label for="preco">Preco:</label>
+            <input type="number" id="preco" name="preco" step="0.01" min="0" required>
 
-		<label for="file">Foto do Carro:</label>
-		<input type="file" id="file" name="file" accept="image/png, image/jpeg, image/gif" required>
+            <label for="file">Imagem do Anuncio:</label>
+            <input type="file" id="file" name="file" accept="image/png, image/jpeg, image/gif">
 
-		<button type="submit" class="btn-submit-ad">Publicar Anuncio</button>
-		<a href="{{ url_for('main.index') }}" class="btn-back">Voltar para a Lista</a>
-	</form>
+            <button type="submit">Criar Anuncio</button>
+        </form>
+    </main>
 </body>
 </html>
